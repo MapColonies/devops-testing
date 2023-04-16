@@ -1,0 +1,27 @@
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Extract tag
+        id: get_tag
+        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+      - name: Check output
+        env:
+          RELEASE_VERSION: ${{ steps.get_tag.outputs.tag }}      
+      -
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.ACR_URL }}
+          username: ${{ secrets.ACR_PUSH_USER }}
+          password: ${{ secrets.ACR_PUSH_TOKEN }}
+      - 
+        run: |
+          docker build . -t ${{ secrets.ACR_URL }}/ ${{ github.event.repository.name }}:${RELEASE_VERSION}
+          docker push ${{ secrets.ACR_URL }}/ ${{ github.event.repository.name }}:${RELEASE_VERSION}
