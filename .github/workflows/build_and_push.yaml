@@ -8,6 +8,7 @@ jobs:
   build_and_test:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       -
         uses: azure/docker-login@v1
         with:
@@ -16,5 +17,5 @@ jobs:
           password: ${{ secrets.ACR_PUSH_TOKEN }}
       - 
         run: |
-          docker build . -t ${{ secrets.ACR_URL }}/${{ github.event.repository.name }}:${{  github.ref_name }}
-          docker push ${{ secrets.ACR_URL }}/${{ github.event.repository.name }}:${{  github.ref_name }}
+          docker build . -t ${{ secrets.ACR_URL }}/${{ github.event.repository.name }}:${{ github.ref_name }}
+          docker push ${{ secrets.ACR_URL }}/${{ github.event.repository.name }}:${{ github.ref_name }}
