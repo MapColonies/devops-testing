@@ -17,5 +17,7 @@ jobs:
           password: ${{ secrets.ACR_PUSH_TOKEN }}
       - 
         run: |
-          docker build . -t ${{ secrets.ACR_URL }}/${{ github.event.repository.name }}:${{ github.ref_name }}
-          docker push ${{ secrets.ACR_URL }}/${{ github.event.repository.name }}:${{ github.ref_name }}
+          docker build . -t ${{ env.Docker_Repository }}
+          docker push ${{ env.Docker_Repository }}
+        env:
+          Docker_Repository: ${{ secrets.ACR_URL }}/${{ github.event.repository.name }}:${{ github.ref_name }}
