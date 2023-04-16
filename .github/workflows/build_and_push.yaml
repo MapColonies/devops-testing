@@ -4,8 +4,7 @@ on:
       - 'v*'
 
 jobs:
-
-  build_and_test:
+  build_and_push:
     runs-on: ubuntu-latest
     steps:
       - 
