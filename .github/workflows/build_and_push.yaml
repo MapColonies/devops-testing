@@ -7,16 +7,13 @@ jobs:
   build_and_push:
     runs-on: ubuntu-latest
     steps:
-      - 
-        uses: actions/checkout@v2
-      -
-        uses: azure/docker-login@v1
+      - uses: actions/checkout@v2
+      - uses: azure/docker-login@v1
         with:
           login-server: ${{ secrets.ACR_URL }}
           username: ${{ secrets.ACR_PUSH_USER }}
           password: ${{ secrets.ACR_PUSH_TOKEN }}
-      - 
-        run: |
+      - run: |
           docker build . -t ${{ env.Docker_Repository }}
           docker push ${{ env.Docker_Repository }}
         env:
