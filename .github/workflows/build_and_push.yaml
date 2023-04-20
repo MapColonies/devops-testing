@@ -2,10 +2,13 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
+    env:
+      Docker_Repository: ${{ secrets.ACR_URL }}/${{ github.event.repository.name }}:${{ github.ref_name }}
     steps:
       - uses: actions/checkout@v2
       - uses: azure/docker-login@v1
@@ -13,8 +16,5 @@ jobs:
           login-server: ${{ secrets.ACR_URL }}
           username: ${{ secrets.ACR_PUSH_USER }}
           password: ${{ secrets.ACR_PUSH_TOKEN }}
-      - run: |
-          docker build . -t ${{ env.Docker_Repository }}
-          docker push ${{ env.Docker_Repository }}
-        env:
-          Docker_Repository: ${{ secrets.ACR_URL }}/${{ github.event.repository.name }}:${{ github.ref_name }}
+      - run: docker build . -t ${{ env.Docker_Repository }}
+      - run: docker push ${{ env.Docker_Repository }}
