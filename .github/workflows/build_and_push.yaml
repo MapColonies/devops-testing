@@ -1,5 +1,8 @@
 on:
   workflow_dispatch:
+    inputs:
+      sha:
+        description: 'Git SHA to Deploy'
   push:
     tags:
       - 'v*'
@@ -9,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       Docker_Repository: ${{ secrets.ACR_URL }}/${{ github.event.repository.name }}:${{ github.ref_name }}
+      SHA_TO_DEPLOY: ${{ github.event.inputs.sha || github.sha }}
     steps:
       - uses: actions/checkout@v2
       - uses: azure/docker-login@v1
