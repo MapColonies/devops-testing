@@ -25,8 +25,8 @@ spec:
         - name: image.tag
           value: v1.0.0
       fileParameters:
-      - name: nginx.tls.certificate
-        path: config/ca.crt
+        - name: nginx.tls.certificate
+          path: ../config/ca.crt
     chart: helm/nginx
   destination:
     server: 'https://kubernetes.default.svc'
