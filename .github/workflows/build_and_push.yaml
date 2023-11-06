@@ -30,7 +30,6 @@ jobs:
       with:
         username: ${{ secrets.ACR_PUSH_USER }}
         password: ${{ secrets.ACR_PUSH_TOKEN }}
-        registry-url: oci://${{ secrets.ACR_URL }}/helm
-        force: true
+        registry-url: ${{ secrets.ACR_URL }}
         chart-folder: helm
         useOCIRegistry: true
