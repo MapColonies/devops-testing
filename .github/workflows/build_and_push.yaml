@@ -30,6 +30,6 @@ jobs:
       with:
         username: ${{ secrets.ACR_PUSH_USER }}
         password: ${{ secrets.ACR_PUSH_TOKEN }}
-        registry-url: ${{ secrets.ACR_URL }}
+        registry-url: acrarolibotnonprod.azurecr.io
         chart-folder: helm
         useOCIRegistry: true
